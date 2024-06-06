@@ -33,7 +33,7 @@ public class PlayerJumpState : PlayerBaseState
     {
         if (Ctx.Grounded && Ctx.ReadyToJump)
             SwitchState(Factory.Grounded());
-        else if (Ctx.IsWallRunning)
+        else if (Ctx.IsWallRunning && Ctx.RB.velocity.y < 0 && Ctx.ReadyToJump)
             SwitchState(Factory.Wallrunning());
     }
 

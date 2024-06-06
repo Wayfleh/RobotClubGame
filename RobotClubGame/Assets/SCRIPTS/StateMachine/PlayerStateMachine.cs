@@ -135,6 +135,7 @@ public class PlayerStateMachine : MonoBehaviour
         _rb.freezeRotation = true;
 
         _states = new PlayerStateFactory(this);
+        _grounded = true;
         _currentState = _states.Grounded();
         _currentState.EnterState();
 
@@ -158,7 +159,7 @@ public class PlayerStateMachine : MonoBehaviour
         _isRunPressed = Input.GetKey(_runKey);
 
         _isJumpPressed = Input.GetKey(_jumpKey);
-        if (_isJumpPressed && _readyToJump && _grounded)
+        if (_isJumpPressed && _readyToJump && (_grounded || _isWallRunning))
         {
             Invoke(nameof(ResetJump), _jumpCooldown);
         }
@@ -215,8 +216,17 @@ public class PlayerStateMachine : MonoBehaviour
         {
             _isWallRunning = true;
         }
+<<<<<<< Updated upstream
         else
             _isWallRunning = false;
+=======
+        // If the player is no longer moving, or is on the ground, stop the wall running
+        else if (_verticalInput == 0 || _grounded || !(_wallLeft || _wallRight))
+        {
+            _isWallRunning = false;
+        }
+        
+>>>>>>> Stashed changes
     }
     void handleFreeze()
     {
@@ -295,14 +305,20 @@ public class PlayerStateMachine : MonoBehaviour
     void Update()
     {
         //ground check
-        _grounded = Physics.Raycast(transform.position, Vector3.down, _playerHeight * 0.5f + 0.2f, _whatIsGround);
+        _grounded = Physics.Raycast(_orientation.position, Vector3.down, _playerHeight * .5f + .2f, _whatIsGround);
+        Debug.DrawRay(_orientation.position, Vector3.down, Color.green);
+
         //drag
         if (_grounded)
         {
             _rb.drag = _groundDrag;
+            Debug.Log("Grounded");
         }
         else
+        {
             _rb.drag = 0;
+            Debug.Log("Not Grounded");
+        }
         WallCheck();
         onInput();
         SpeedControl();
