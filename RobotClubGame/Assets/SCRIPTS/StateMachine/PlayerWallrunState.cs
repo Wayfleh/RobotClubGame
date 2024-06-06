@@ -18,14 +18,9 @@ public class PlayerWallrunState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchStates();
-<<<<<<< Updated upstream
-        if(Ctx.IsWallRunning)
-            WallRunMovement();
-=======
 
         if(Ctx.IsWallRunning && !Ctx.IsJumping) // Called in PlayerStateMachine
             WallRunMovement(); // If true, call WallRunMovement
->>>>>>> Stashed changes
     }
 
     public void WallRunMovement()
@@ -38,15 +33,8 @@ public class PlayerWallrunState : PlayerBaseState
         Vector3 wallForward = Vector3.Cross(wallNormal, Ctx.Orientation.up);
 
         Ctx.RB.AddForce(wallForward * Ctx.WallRunForce, ForceMode.Force);
-<<<<<<< Updated upstream
     }
 
-=======
-
-    }
-
-    // This doesn't appear to be called
->>>>>>> Stashed changes
     public override void ExitState()
     {
         Ctx.RB.useGravity = true;

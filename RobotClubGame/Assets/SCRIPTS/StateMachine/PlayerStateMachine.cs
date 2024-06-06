@@ -9,7 +9,6 @@ public class PlayerStateMachine : MonoBehaviour
     public Animator _animator;
     Camera _mainCamera;
     Rigidbody _rb;
-    public Rigidbody RB { get { return _rb; } }
 
     int _isWalkingHash;
     int _isRunningHash;
@@ -216,17 +215,11 @@ public class PlayerStateMachine : MonoBehaviour
         {
             _isWallRunning = true;
         }
-<<<<<<< Updated upstream
-        else
-            _isWallRunning = false;
-=======
-        // If the player is no longer moving, or is on the ground, stop the wall running
+        // If the player is no longer moving, or is on the ground, or is not on the wall, stop the wall running
         else if (_verticalInput == 0 || _grounded || !(_wallLeft || _wallRight))
         {
             _isWallRunning = false;
         }
-        
->>>>>>> Stashed changes
     }
     void handleFreeze()
     {
